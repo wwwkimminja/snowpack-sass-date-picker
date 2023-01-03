@@ -68,7 +68,38 @@ class DatePicker {
         this.dateInputEl.addEventListener('click', this.toggleCalendar.bind(this));
         this.nextBtnEl.addEventListener('click', this.moveToNextMonth.bind(this))
         this.prevBtnEl.addEventListener('click', this.moveToPrevMonth.bind(this))
+        this.calendarDatesEl.addEventListener("click", this.onClickSelectDate.bind(this))
     }
+    onClickSelectDate(event) {
+        const eventTarget = event.target;
+        if (eventTarget.dataset.date) {
+            this.calendarDatesEl.querySelector('.selected')?.classList.remove('selected');
+            eventTarget.classList.add('selected');
+            this.selectedDate = {
+                data: new Date(this.#calendarDate.year, this.#calendarDate.month, eventTarget.dataset.date),
+                year: this.#calendarDate.year,
+                month: this.#calendarDate.month,
+                date: eventTarget.dataset.date,
+            }
+            this.dateInputEl.textContent = this.formateDate(this.selectedDate.data)
+        }
+
+    }
+
+    formateDate(dateData) {
+        let date = dateData.getDate();
+        if (date < 10) {
+            date = `0${date}`;
+        }
+        let month = dateData.getMonth() + 1;
+        if (month < 10) {
+            month = `0${month}`
+        }
+        let year = dateData.getFullYear();
+        return `${year}/${month}/${date}`
+
+    }
+
     moveToNextMonth() {
         this.#calendarDate.month++;
         if (this.#calendarDate.month > 11) {

@@ -37,8 +37,18 @@ class DatePicker {
     calendarDatesEl;
     constructor() {
         this.initCalendarDate();
+        this.initSelectedData();
         this.assignElement();
+        this.setDateInput();
         this.addEvent();
+
+    }
+    initSelectedData() {
+        this.selectedDate = { ...this.#calendarDate };
+    }
+    setDateInput() {
+        this.dateInputEl.textContent = this.formateDate(this.selectedDate.data)
+        this.dateInputEl.dataset.value = this.selectedDate.data;
 
     }
     initCalendarDate() {
@@ -81,7 +91,8 @@ class DatePicker {
                 month: this.#calendarDate.month,
                 date: eventTarget.dataset.date,
             }
-            this.dateInputEl.textContent = this.formateDate(this.selectedDate.data)
+            this.setDateInput()
+            this.calendarEl.classList.remove('active');
         }
 
     }

@@ -116,15 +116,6 @@
         &.selected {
           background-color: #00ca85;
         }
-        &:nth-child(7n + 2) {
-          color: red;
-        }
-        &:nth-child(7n + 1) {
-          color: blue;
-        }
-        &:first-child {
-          grid-column-start: 7;
-        }
       }
     }
   }

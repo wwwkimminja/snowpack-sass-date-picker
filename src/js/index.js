@@ -88,7 +88,23 @@ class DatePicker {
             dateEl.dataset.date = i + 1;
             fragment.appendChild(dateEl);
         }
+        fragment.firstChild.style.gridColumStart = new Date(this.#calendarDate.year, this.#calendarDate.month, 1).getDay() + 1
         this.calendarDatesEl.appendChild(fragment);
+        this.colorSaturday();
+        this.colorSunday();
+    }
+    colorSaturday() {
+        const saturdayEls = this.calendarDatesEl.querySelectorAll(`.date:nth-child(7n+${7 - new Date(this.#calendarDate.year, this.#calendarDate.month, 1).getDay() + 1})`);
+        for (let i = 0; i < saturdayEls.length; i++) {
+            saturdayEls[i].style.color = "blue";
+        }
+    }
+    colorSunday() {
+        const sundayEls = this.calendarDatesEl.querySelectorAll(`.data:nth-child(7n+${8 - new Date(this.#calendarDate.year, this.#calendarDate.month, 1).getDay() % 7})`)
+        for (let i = 0; i < sundayEls.length; i++) {
+            sundayEls[i].style.color = "red";
+
+        }
     }
 
 }

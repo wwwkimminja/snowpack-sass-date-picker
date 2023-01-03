@@ -66,7 +66,19 @@ class DatePicker {
 
     addEvent() {
         this.dateInputEl.addEventListener('click', this.toggleCalendar.bind(this));
+        this.nextBtnEl.addEventListener('click', this.moveToNextMonth.bind(this))
+
     }
+    moveToNextMonth() {
+        this.#calendarDate.month++;
+        if (this.#calendarDate.month > 11) {
+            this.#calendarDate.month = 0;
+            this.#calendarDate.year++;
+        }
+        this.updateMonth();
+        this.updateDates();
+    }
+
 
     toggleCalendar() {
         this.calendarEl.classList.toggle('active');

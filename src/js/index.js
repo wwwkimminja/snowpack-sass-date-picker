@@ -92,7 +92,19 @@ class DatePicker {
         this.calendarDatesEl.appendChild(fragment);
         this.colorSaturday();
         this.colorSunday();
+        this.markToday();
+
     }
+    markToday() {
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear();
+        const today = currentDate.getDate();
+        if (currentYear === this.#calendarDate.year && currentMonth === this.#calendarDate.month) {
+            this.calendarDatesEl.querySelector(`[data-date='${today}']`).classList.add('today')
+        }
+    }
+
     colorSaturday() {
         const saturdayEls = this.calendarDatesEl.querySelectorAll(`.date:nth-child(7n+${7 - new Date(this.#calendarDate.year, this.#calendarDate.month, 1).getDay()})`);
         for (let i = 0; i < saturdayEls.length; i++) {

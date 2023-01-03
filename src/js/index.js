@@ -132,13 +132,18 @@ class DatePicker {
 
 
     toggleCalendar() {
+        if (this.calendarEl.classList.contains('active')) {
+            this.#calendarDate = { ...this.selectedData };
+        }
         this.calendarEl.classList.toggle('active');
         this.updateMonth();
         this.updateDates();
     }
+
     updateMonth() {
         this.monthContentEl.textContent = `${this.#calendarDate.year} ${this.monthData[this.#calendarDate.month]}`
     }
+
     updateDates() {
         this.calendarDatesEl.innerHTML = '';
         const numberOfDates = new Date(this.#calendarDate.year, this.#calendarDate.month + 1, 0,).getDate();
@@ -156,8 +161,16 @@ class DatePicker {
         this.colorSaturday();
         this.colorSunday();
         this.markToday();
+        this.markSelectedDate();
 
     }
+
+    markSelectedDate() {
+        if (this.selectedDate.year === this.#calendarDate.year && this.selectedDate.month === this.#calendarDate.month) {
+            this.calendarDatesEl.querySelector(`[data-date='${this.selectedDate.date}']`).classList.add('selected')
+        }
+    }
+
     markToday() {
         const currentDate = new Date();
         const currentMonth = currentDate.getMonth();
@@ -174,6 +187,7 @@ class DatePicker {
             saturdayEls[i].style.color = "blue";
         }
     }
+
     colorSunday() {
         const sundayEls = this.calendarDatesEl.querySelectorAll(`.date:nth-child(7n+${(8 - new Date(this.#calendarDate.year, this.#calendarDate.month, 1).getDay()) % 7})`)
         for (let i = 0; i < sundayEls.length; i++) {

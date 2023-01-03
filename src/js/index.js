@@ -58,7 +58,7 @@ class DatePicker {
         this.dateInputEl = this.datePickerEl.querySelector("#date-input")
         this.calendarEl = this.datePickerEl.querySelector("#calendar");
         this.calendarMonthEl = this.calendarEl.querySelector('#month');
-        this.monthContent = this.calendarMonthEl.querySelector('#content');
+        this.monthContentEl = this.calendarMonthEl.querySelector('#content');
         this.nextBtnEl = this.calendarMonthEl.querySelector('#next');
         this.prevBtnEl = this.calendarMonthEl.querySelector('#prev');
         this.calendarDatesEl = this.calendarEl.querySelector('#dates')
@@ -70,6 +70,25 @@ class DatePicker {
 
     toggleCalendar() {
         this.calendarEl.classList.toggle('active');
+        this.updateMonth();
+        this.updateDates();
+    }
+    updateMonth() {
+        this.monthContentEl.textContent = `${this.#calendarDate.year} ${this.monthData[this.#calendarDate.month]}`
+    }
+    updateDates() {
+        this.calendarDatesEl.innerHTML = '';
+        const numberOfDates = new Date(this.#calendarDate.year, this.#calendarDate.month + 1, 0,).getDate();
+        const fragment = new DocumentFragment();
+
+        for (let i = 0; i < numberOfDates; i++) {
+            const dateEl = document.createElement('div');
+            dateEl.classList.add('date');
+            dateEl.textContent = i + 1;
+            dateEl.dataset.date = i + 1;
+            fragment.appendChild(dateEl);
+        }
+        this.calendarDatesEl.appendChild(fragment);
     }
 
 }
